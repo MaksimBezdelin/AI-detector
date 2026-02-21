@@ -1,8 +1,3 @@
-"""
-🏭 УМНЫЙ ИНСПЕКТОР ТРЕЩИН
-✅ ИЗОБРАЖЕНИЯ + ВИДЕО | Центр → 50/50 | ПОЛОНОЕ ИЗОБРАЖЕНИЕ
-✅ ИСПРАВЛЕНА ОШИБКА UnboundLocalError
-"""
 
 import tkinter as tk
 from tkinter import filedialog, messagebox
@@ -292,18 +287,15 @@ class SmartInspector:
                 break
                 
             frame_count += 1
-            
-            # Анализируем каждый 30-й кадр
+        
             if frame_count % 30 == 0:
                 frame_resized = cv2.resize(frame, (800, 800))
                 results = self.model(frame_resized, conf=0.08, verbose=False, imgsz=800)
                 
-                # ✅ ГАРАНТИРОВАННО создаем filtered_result
                 filtered_result = self.smart_filter(results[0])
                 stats = self.get_priority_stats(filtered_result)
                 self.root.after(0, lambda s=stats: self.update_stats(s))
             
-            # ✅ Всегда создаем annotated для отображения
             frame_resized = cv2.resize(frame, (800, 640))
             results = self.model(frame_resized, conf=0.08, verbose=False, imgsz=800)
             filtered_result = self.smart_filter(results[0])  # ← ВТОРОЙ вызов для отображения
