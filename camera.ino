@@ -1,9 +1,3 @@
-/*********
-  ESP32-CAM HD 400x296 — ФОНАРЬ + HD КАЧЕСТВО
-  ✅ Фонарь включается автоматически
-  ✅ Без всех надписей
-  ✅ jpeg_quality=12 (лучше)
-*********/
 
 #include "esp_camera.h"
 #include <WiFi.h>
@@ -11,16 +5,16 @@
 #include "Arduino.h"
 #include <time.h>
 
-// WiFi
-const char* ssid = "SNR-CPE-8934";
-const char* password = "1820055720";
+
+const char* ssid = "";
+const char* password = "";
 
 // NTP
 const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = 10800;
 const int   daylightOffset_sec = 0;
 
-// ✅ ПИН ФОНАРЯ (GPIO 4)
+
 #define FLASH_LED_PIN 4
 
 // Пины AI-Thinker ESP32-CAM
@@ -134,7 +128,7 @@ void startCameraServer(){
   }
 }
 
-// ✅ ФУНКЦИЯ УПРАВЛЕНИЯ ФОНАРЁМ
+
 void flashLed(bool state) {
   digitalWrite(FLASH_LED_PIN, state ? HIGH : LOW);
 }
@@ -144,11 +138,10 @@ void setup() {
   delay(2000);
   Serial.println("\n🚀 ESP32-CAM FLASH HD v5.9");
   
-  // ✅ ИНИЦИАЛИЗАЦИЯ ФОНАРЯ
+
   pinMode(FLASH_LED_PIN, OUTPUT);
   digitalWrite(FLASH_LED_PIN, LOW);  // Выключить сначала
   
-  // HD КАЧЕСТВО
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
